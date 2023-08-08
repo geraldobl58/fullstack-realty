@@ -29,7 +29,7 @@ const UserMenu = () => {
     <Box sx={{ flexGrow: 0 }}>
       <Tooltip title="Configurações">
         <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-          <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
+          <Avatar alt="John Doe" src="/static/images/avatar/2.jpg" />
         </IconButton>
       </Tooltip>
       <Menu
