@@ -6,7 +6,10 @@ import { ThemeProvider, CssBaseline } from "@mui/material";
 import AppBarUI from "./components/AppBar";
 import ClientOnly from "./components/ClientOnly";
 
+import Register from "./templates/Register";
+
 import { ModalProvider } from "./contexts/ModalContext";
+import { SnackBarProvider } from "./contexts/SnackbarContext";
 
 import { theme } from "./styles/theme";
 
@@ -29,14 +32,17 @@ export default function RootLayout({
       </head>
       <ThemeProvider theme={theme}>
         <CssBaseline />
-        <ModalProvider>
-          <body>
-            <ClientOnly>
-              <AppBarUI />
-            </ClientOnly>
-            {children}
-          </body>
-        </ModalProvider>
+        <SnackBarProvider>
+          <ModalProvider>
+            <body>
+              <ClientOnly>
+                <AppBarUI />
+                <Register />
+              </ClientOnly>
+              {children}
+            </body>
+          </ModalProvider>
+        </SnackBarProvider>
       </ThemeProvider>
     </html>
   );
