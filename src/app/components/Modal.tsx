@@ -19,15 +19,22 @@ import { useModal } from "../hooks/useModal";
 interface ModalUIProps {
   icon?: React.ReactNode;
   title: string;
-  description: string | ReactNode;
+  description?: string | ReactNode;
   content: ReactNode;
+  contentFull?: ReactNode;
 }
 
-const ModalUI = ({ icon, title, description, content }: ModalUIProps) => {
+const ModalUI = ({
+  icon,
+  title,
+  description,
+  contentFull,
+  content,
+}: ModalUIProps) => {
   const { open, handleClose } = useModal();
 
   return (
-    <Dialog open={open} onClose={handleClose}>
+    <Dialog open={open} onClose={handleClose} fullWidth>
       <DialogTitle
         display="flex"
         alignItems="center"
@@ -45,20 +52,11 @@ const ModalUI = ({ icon, title, description, content }: ModalUIProps) => {
       </DialogTitle>
       <Divider />
       <DialogContent>
-        <Typography gutterBottom>{description}</Typography>
+        {contentFull && contentFull}
+        {description && <Typography gutterBottom>{description}</Typography>}
       </DialogContent>
       <Divider />
-      <DialogActions>
-        <Box
-          display="flex"
-          alignItems="center"
-          justifyContent="space-between"
-          gap={2}
-          padding={1}
-        >
-          {content}
-        </Box>
-      </DialogActions>
+      <DialogActions sx={{ p: 2 }}>{content}</DialogActions>
     </Dialog>
   );
 };

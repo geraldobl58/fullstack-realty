@@ -5,6 +5,7 @@ import { MouseEvent, useState } from "react";
 import {
   Avatar,
   Box,
+  Divider,
   IconButton,
   Menu,
   MenuItem,
@@ -12,9 +13,13 @@ import {
   Typography,
 } from "@mui/material";
 
-const settings = ["Dashboard", "Sair"];
+import { useModal } from "../hooks/useModal";
+
+// const settings = ["Dashboard", "Sair"];
 
 const UserMenu = () => {
+  const { handleClickOpen } = useModal();
+
   const [anchorElUser, setAnchorElUser] = useState<null | HTMLElement>(null);
 
   const handleOpenUserMenu = (event: MouseEvent<HTMLElement>) => {
@@ -48,11 +53,21 @@ const UserMenu = () => {
         open={Boolean(anchorElUser)}
         onClose={handleCloseUserMenu}
       >
-        {settings.map((setting) => (
+        {/* {settings.map((setting) => (
           <MenuItem key={setting} onClick={handleCloseUserMenu}>
             <Typography textAlign="center">{setting}</Typography>
           </MenuItem>
-        ))}
+        ))} */}
+
+        <MenuItem>
+          <Typography textAlign="center" onClick={handleClickOpen}>
+            Cadastre-se
+          </Typography>
+        </MenuItem>
+        <Divider />
+        <MenuItem>
+          <Typography textAlign="center">Entrar</Typography>
+        </MenuItem>
       </Menu>
     </Box>
   );

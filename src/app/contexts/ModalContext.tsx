@@ -2,7 +2,7 @@
 
 import { createContext, useState } from "react";
 
-interface ModalContenType {
+interface ModalContentType {
   open: boolean;
   handleClickOpen: () => void;
   handleClose: () => void;
@@ -12,7 +12,7 @@ interface ModalProviderProps {
   children: React.ReactNode;
 }
 
-export const ModalContext = createContext({} as ModalContenType);
+export const ModalContext = createContext({} as ModalContentType);
 
 export function ModalProvider({ children }: ModalProviderProps) {
   const [open, setOpen] = useState(false);
