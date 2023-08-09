@@ -8,9 +8,9 @@ export const palette: PaletteOptions = {
     white: "#FFF",
   },
   primary: {
-    light: "#A79CFF",
-    main: "#5D4EE8",
-    dark: "#372DB7",
+    light: "#d1658a",
+    main: "#e31c5f",
+    dark: "#a60039",
     contrastText: "#FFF",
   },
   secondary: {
