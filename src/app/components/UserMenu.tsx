@@ -4,8 +4,6 @@ import { MouseEvent, useState } from "react";
 
 import { signOut } from "next-auth/react";
 
-import { User } from "@prisma/client";
-
 import {
   Avatar,
   Box,
@@ -19,8 +17,10 @@ import {
 
 import { useModal } from "../hooks/useModal";
 
+import { SafeUser } from "../types";
+
 interface UserMenuProps {
-  currentUser?: User | null;
+  currentUser?: SafeUser | null;
 }
 
 const UserMenu = ({ currentUser }: UserMenuProps) => {

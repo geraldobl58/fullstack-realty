@@ -10,8 +10,9 @@ import Register from "./templates/Register";
 
 import { ModalProvider } from "./contexts/ModalContext";
 
-import { theme } from "./styles/theme";
 import getCurrentUser from "./actions/getCurrentUser";
+
+import { theme } from "./styles/theme";
 
 export default async function RootLayout({
   children,

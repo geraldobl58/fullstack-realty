@@ -19,12 +19,12 @@ import {
 import Logo from "./Logo";
 import UserMenu from "./UserMenu";
 
-import { User } from "@prisma/client";
+import { SafeUser } from "../types";
 
 const pages = ["Apartamentos", "Casa", "Terrenos"];
 
 interface AppBarUIProps {
-  currentUser?: User | null;
+  currentUser?: SafeUser | null;
 }
 
 const AppBarUI = ({ currentUser }: AppBarUIProps) => {
