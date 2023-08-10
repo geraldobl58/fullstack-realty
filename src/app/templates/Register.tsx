@@ -5,30 +5,31 @@ import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 
 import axios from "axios";
 
-import { Button, Grid, TextField, Typography } from "@mui/material";
-import { GitHub, Google } from "@mui/icons-material";
+import { yupResolver } from "@hookform/resolvers/yup";
 
-import { useSnackBar } from "../hooks/useSnackBar";
+import { Button, Grid, Typography } from "@mui/material";
+import { GitHub, Google } from "@mui/icons-material";
 
 import ModalUI from "../components/Modal";
 import AlertSnack from "../components/AlertSnack";
+import InputField from "../components/InputField";
+
+import { schemaRegister } from "../schemas/register";
+
+import { useSnackBar } from "../hooks/useSnackBar";
 
 const Register = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [isError, setIsError] = useState(false);
 
-  const { handleClickOpen } = useSnackBar();
+  const { setOpenSnackbar } = useSnackBar();
 
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<FieldValues>({
-    defaultValues: {
-      name: "",
-      email: "",
-      password: "",
-    },
+  } = useForm({
+    resolver: yupResolver(schemaRegister),
   });
 
   const onSubmit: SubmitHandler<FieldValues> = (data) => {
@@ -41,7 +42,7 @@ const Register = () => {
         console.log("success");
       })
       .catch((error) => {
-        handleClickOpen();
+        setOpenSnackbar();
         setIsError(true);
       })
       .finally(() => {
@@ -58,36 +59,38 @@ const Register = () => {
         </Typography>
       </Grid>
       <Grid item xs={12}>
-        <TextField
-          type="text"
-          fullWidth
-          size="medium"
-          required
-          disabled={isLoading}
+        <InputField
+          id="fullname"
           label="Nome completo"
-          variant="outlined"
+          disabled={isLoading}
+          register={register}
+          errors={errors}
+          required
+          errorMessage={errors.fullname?.message}
         />
       </Grid>
       <Grid item xs={12}>
-        <TextField
+        <InputField
+          id="email"
           type="email"
-          fullWidth
-          size="medium"
-          required
-          disabled={isLoading}
           label="E-mail"
-          variant="outlined"
+          disabled={isLoading}
+          register={register}
+          errors={errors}
+          required
+          errorMessage={errors.email?.message}
         />
       </Grid>
       <Grid item xs={12}>
-        <TextField
+        <InputField
+          id="password"
           type="password"
-          fullWidth
-          size="medium"
-          required
-          disabled={isLoading}
           label="Senha"
-          variant="outlined"
+          disabled={isLoading}
+          register={register}
+          errors={errors}
+          required
+          errorMessage={errors.password?.message}
         />
       </Grid>
     </Grid>

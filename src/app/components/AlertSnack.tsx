@@ -15,16 +15,20 @@ const AlertSnack = ({
   severity,
   autoHideDuration = 3000,
 }: AlertSnackProps) => {
-  const { open, handleClose } = useSnackBar();
+  const { open, setCloseSnackbar } = useSnackBar();
 
   return (
     <Snackbar
       open={open}
       autoHideDuration={autoHideDuration}
-      onClose={handleClose}
+      onClose={setCloseSnackbar}
       anchorOrigin={{ horizontal: "center", vertical: "top" }}
     >
-      <Alert onClose={handleClose} severity={severity} sx={{ width: "100%" }}>
+      <Alert
+        onClose={setCloseSnackbar}
+        severity={severity}
+        sx={{ width: "100%" }}
+      >
         {title}
       </Alert>
     </Snackbar>
