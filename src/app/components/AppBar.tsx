@@ -19,9 +19,15 @@ import {
 import Logo from "./Logo";
 import UserMenu from "./UserMenu";
 
+import { User } from "@prisma/client";
+
 const pages = ["Apartamentos", "Casa", "Terrenos"];
 
-const AppBarUI = () => {
+interface AppBarUIProps {
+  currentUser?: User | null;
+}
+
+const AppBarUI = ({ currentUser }: AppBarUIProps) => {
   const [anchorElNav, setAnchorElNav] = useState<null | HTMLElement>(null);
 
   const handleOpenNavMenu = (event: MouseEvent<HTMLElement>) => {
@@ -113,7 +119,7 @@ const AppBarUI = () => {
           </Box>
 
           <Box sx={{ flexGrow: 0 }}>
-            <UserMenu />
+            <UserMenu currentUser={currentUser} />
           </Box>
         </Toolbar>
       </Container>

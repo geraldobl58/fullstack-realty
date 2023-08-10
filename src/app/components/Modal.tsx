@@ -31,10 +31,10 @@ const ModalUI = ({
   contentFull,
   content,
 }: ModalUIProps) => {
-  const { open, handleClose } = useModal();
+  const { open, setModalClose } = useModal();
 
   return (
-    <Dialog open={open} onClose={handleClose} fullWidth>
+    <Dialog open={open} onClose={setModalClose} fullWidth>
       <DialogTitle
         display="flex"
         alignItems="center"
@@ -46,7 +46,7 @@ const ModalUI = ({
             {title}
           </Typography>
         </Box>
-        <IconButton onClick={handleClose}>
+        <IconButton onClick={setModalClose}>
           <Close />
         </IconButton>
       </DialogTitle>

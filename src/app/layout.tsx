@@ -1,23 +1,25 @@
 /* eslint-disable @next/next/no-page-custom-font */
-"use client";
 
 import { ThemeProvider, CssBaseline } from "@mui/material";
 
 import AppBarUI from "./components/AppBar";
 import ClientOnly from "./components/ClientOnly";
 
+import Login from "./templates/Login";
 import Register from "./templates/Register";
 
 import { ModalProvider } from "./contexts/ModalContext";
-import { SnackBarProvider } from "./contexts/SnackbarContext";
 
 import { theme } from "./styles/theme";
+import getCurrentUser from "./actions/getCurrentUser";
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
+  const currentUser = await getCurrentUser();
+
   return (
     <html lang="en">
       <head>
@@ -32,17 +34,16 @@ export default function RootLayout({
       </head>
       <ThemeProvider theme={theme}>
         <CssBaseline />
-        <SnackBarProvider>
-          <ModalProvider>
-            <body>
-              <ClientOnly>
-                <AppBarUI />
-                <Register />
-              </ClientOnly>
-              {children}
-            </body>
-          </ModalProvider>
-        </SnackBarProvider>
+        <ModalProvider>
+          <body>
+            <ClientOnly>
+              <AppBarUI currentUser={currentUser} />
+              <Login />
+              {/* <Register /> */}
+            </ClientOnly>
+            {children}
+          </body>
+        </ModalProvider>
       </ThemeProvider>
     </html>
   );

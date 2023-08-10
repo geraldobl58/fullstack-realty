@@ -4,8 +4,8 @@ import { createContext, useState } from "react";
 
 interface ModalContentType {
   open: boolean;
-  handleClickOpen: () => void;
-  handleClose: () => void;
+  setModalOpen: () => void;
+  setModalClose: () => void;
 }
 
 interface ModalProviderProps {
@@ -17,10 +17,10 @@ export const ModalContext = createContext({} as ModalContentType);
 export function ModalProvider({ children }: ModalProviderProps) {
   const [open, setOpen] = useState(false);
 
-  const handleClickOpen = () => {
+  const setModalOpen = () => {
     setOpen(true);
   };
-  const handleClose = () => {
+  const setModalClose = () => {
     setOpen(false);
   };
 
@@ -28,8 +28,8 @@ export function ModalProvider({ children }: ModalProviderProps) {
     <ModalContext.Provider
       value={{
         open,
-        handleClickOpen,
-        handleClose,
+        setModalOpen,
+        setModalClose,
       }}
     >
       {children}

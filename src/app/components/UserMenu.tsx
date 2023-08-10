@@ -2,6 +2,10 @@
 
 import { MouseEvent, useState } from "react";
 
+import { signOut } from "next-auth/react";
+
+import { User } from "@prisma/client";
+
 import {
   Avatar,
   Box,
@@ -15,10 +19,12 @@ import {
 
 import { useModal } from "../hooks/useModal";
 
-// const settings = ["Dashboard", "Sair"];
+interface UserMenuProps {
+  currentUser?: User | null;
+}
 
-const UserMenu = () => {
-  const { handleClickOpen } = useModal();
+const UserMenu = ({ currentUser }: UserMenuProps) => {
+  const { setModalOpen } = useModal();
 
   const [anchorElUser, setAnchorElUser] = useState<null | HTMLElement>(null);
 
@@ -30,11 +36,18 @@ const UserMenu = () => {
     setAnchorElUser(null);
   };
 
+  const handleSignOut = () => {
+    signOut();
+  };
+
   return (
     <Box sx={{ flexGrow: 0 }}>
       <Tooltip title="Configurações">
         <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-          <Avatar alt="John Doe" src="/static/images/avatar/2.jpg" />
+          <Avatar
+            alt={currentUser?.fullname || ""}
+            src="/images/placeholder.jpeg"
+          />
         </IconButton>
       </Tooltip>
       <Menu
@@ -53,21 +66,31 @@ const UserMenu = () => {
         open={Boolean(anchorElUser)}
         onClose={handleCloseUserMenu}
       >
-        {/* {settings.map((setting) => (
-          <MenuItem key={setting} onClick={handleCloseUserMenu}>
-            <Typography textAlign="center">{setting}</Typography>
-          </MenuItem>
-        ))} */}
-
-        <MenuItem>
-          <Typography textAlign="center" onClick={handleClickOpen}>
-            Cadastre-se
-          </Typography>
-        </MenuItem>
-        <Divider />
-        <MenuItem>
-          <Typography textAlign="center">Entrar</Typography>
-        </MenuItem>
+        {currentUser ? (
+          <Box>
+            <MenuItem>
+              <Typography>Minhas propriedades</Typography>
+            </MenuItem>
+            <Divider />
+            <MenuItem>
+              <Typography>Meus favoritos</Typography>
+            </MenuItem>
+            <Divider />
+            <MenuItem onClick={handleSignOut}>
+              <Typography>Sair</Typography>
+            </MenuItem>
+          </Box>
+        ) : (
+          <Box>
+            <MenuItem onClick={setModalOpen}>
+              <Typography>Entrar</Typography>
+            </MenuItem>
+            <Divider />
+            <MenuItem>
+              <Typography>Cadastre-se</Typography>
+            </MenuItem>
+          </Box>
+        )}
       </Menu>
     </Box>
   );
