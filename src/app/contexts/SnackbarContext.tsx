@@ -4,8 +4,8 @@ import { createContext, useState } from "react";
 
 interface SnackBarContentType {
   open: boolean;
-  handleClickOpen: () => void;
-  handleClose: () => void;
+  setOpenSnackbar: () => void;
+  setCloseSnackbar: () => void;
 }
 
 interface SnackBarProviderProps {
@@ -17,11 +17,11 @@ export const SnackBarContext = createContext({} as SnackBarContentType);
 export function SnackBarProvider({ children }: SnackBarProviderProps) {
   const [open, setOpen] = useState(false);
 
-  const handleClickOpen = () => {
+  const setOpenSnackbar = () => {
     setOpen(true);
   };
 
-  const handleClose = (
+  const setCloseSnackbar = (
     event?: React.SyntheticEvent | Event,
     reason?: string
   ) => {
@@ -36,8 +36,8 @@ export function SnackBarProvider({ children }: SnackBarProviderProps) {
     <SnackBarContext.Provider
       value={{
         open,
-        handleClickOpen,
-        handleClose,
+        setOpenSnackbar,
+        setCloseSnackbar,
       }}
     >
       {children}
