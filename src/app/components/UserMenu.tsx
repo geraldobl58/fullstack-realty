@@ -45,8 +45,8 @@ const UserMenu = ({ currentUser }: UserMenuProps) => {
       <Tooltip title="Configurações">
         <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
           <Avatar
-            alt={currentUser?.fullname || ""}
-            src="/images/placeholder.jpeg"
+            alt={currentUser?.name || ""}
+            src={currentUser?.image || "/images/placeholder.jpeg"}
           />
         </IconButton>
       </Tooltip>

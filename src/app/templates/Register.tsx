@@ -3,7 +3,9 @@
 import { useState } from "react";
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 
-import { enqueueSnackbar } from "notistack";
+import { signIn } from "next-auth/react";
+
+import { SnackbarProvider, enqueueSnackbar } from "notistack";
 
 import axios from "axios";
 
@@ -12,14 +14,22 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { Button, Grid, Typography } from "@mui/material";
 import { GitHub, Google } from "@mui/icons-material";
 
+import { useRouter } from "next/navigation";
+
 import ModalUI from "../components/Modal";
 
 import InputField from "../components/InputField";
+
+import { useModal } from "../hooks/useModal";
 
 import { schemaRegister } from "../schemas/register";
 
 const Register = () => {
   const [isLoading, setIsLoading] = useState(false);
+
+  const router = useRouter();
+
+  const { setModalClose } = useModal();
 
   const {
     register,
@@ -31,12 +41,21 @@ const Register = () => {
 
   const onSubmit: SubmitHandler<FieldValues> = (data) => {
     setIsLoading(true);
-    console.log(data);
 
     axios
       .post("/api/register", data)
       .then(() => {
-        console.log("success");
+        enqueueSnackbar("Cadastro realizado com sucesso!", {
+          variant: "success",
+          preventDuplicate: true,
+          anchorOrigin: {
+            vertical: "top",
+            horizontal: "center",
+          },
+        });
+
+        router.refresh();
+        setModalClose();
       })
       .catch((error) => {
         enqueueSnackbar("Houve um erro ao realizar o cadastro!", {
@@ -64,13 +83,13 @@ const Register = () => {
       </Grid>
       <Grid item xs={12}>
         <InputField
-          id="fullname"
+          id="name"
           label="Nome completo"
           disabled={isLoading}
           register={register}
           errors={errors}
           required
-          errorMessage={errors.fullname?.message}
+          errorMessage={errors.name?.message}
         />
       </Grid>
       <Grid item xs={12}>
@@ -101,57 +120,60 @@ const Register = () => {
   );
 
   return (
-    <ModalUI
-      title="Cadastrar-se"
-      contentFull={bodyContent}
-      content={
-        <Grid container spacing={2}>
-          <Grid item xs={12}>
-            <Button
-              type="submit"
-              fullWidth
-              size="large"
-              variant="contained"
-              disabled={isLoading}
-              onClick={handleSubmit(onSubmit)}
-            >
-              Continuar
-            </Button>
+    <>
+      <SnackbarProvider />
+      <ModalUI
+        title="Cadastrar-se"
+        contentFull={bodyContent}
+        content={
+          <Grid container spacing={2}>
+            <Grid item xs={12}>
+              <Button
+                type="submit"
+                fullWidth
+                size="large"
+                variant="contained"
+                disabled={isLoading}
+                onClick={handleSubmit(onSubmit)}
+              >
+                Continuar
+              </Button>
+            </Grid>
+            <Grid item xs={12}>
+              <Button
+                fullWidth
+                startIcon={<Google />}
+                size="large"
+                variant="outlined"
+                onClick={() => signIn("google")}
+              >
+                Continuar com Google
+              </Button>
+            </Grid>
+            <Grid item xs={12}>
+              <Button
+                fullWidth
+                startIcon={<GitHub />}
+                size="large"
+                variant="outlined"
+                onClick={() => signIn("github")}
+              >
+                Continuar com Github
+              </Button>
+            </Grid>
+            <Grid item xs={12}>
+              <Typography
+                variant="body1"
+                color="text.secondary"
+                textAlign="center"
+              >
+                Já tenho conta! Entrar
+              </Typography>
+            </Grid>
           </Grid>
-          <Grid item xs={12}>
-            <Button
-              fullWidth
-              startIcon={<Google />}
-              size="large"
-              variant="outlined"
-              onClick={() => {}}
-            >
-              Continuar com Google
-            </Button>
-          </Grid>
-          <Grid item xs={12}>
-            <Button
-              fullWidth
-              startIcon={<GitHub />}
-              size="large"
-              variant="outlined"
-              onClick={() => {}}
-            >
-              Continuar com Github
-            </Button>
-          </Grid>
-          <Grid item xs={12}>
-            <Typography
-              variant="body1"
-              color="text.secondary"
-              textAlign="center"
-            >
-              Já tenho conta! Entrar
-            </Typography>
-          </Grid>
-        </Grid>
-      }
-    />
+        }
+      />
+    </>
   );
 };
 

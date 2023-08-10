@@ -130,7 +130,7 @@ const Login = () => {
                 startIcon={<Google />}
                 size="large"
                 variant="outlined"
-                onClick={() => {}}
+                onClick={() => signIn("google")}
               >
                 Continuar com Google
               </Button>
@@ -141,7 +141,7 @@ const Login = () => {
                 startIcon={<GitHub />}
                 size="large"
                 variant="outlined"
-                onClick={() => {}}
+                onClick={() => signIn("github")}
               >
                 Continuar com Github
               </Button>
