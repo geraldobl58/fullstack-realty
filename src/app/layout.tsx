@@ -5,9 +5,6 @@ import { ThemeProvider, CssBaseline } from "@mui/material";
 import AppBarUI from "./components/AppBar";
 import ClientOnly from "./components/ClientOnly";
 
-import Login from "./templates/Login";
-import Register from "./templates/Register";
-
 import { ModalProvider } from "./contexts/ModalContext";
 
 import getCurrentUser from "./actions/getCurrentUser";
@@ -39,8 +36,6 @@ export default async function RootLayout({
           <body>
             <ClientOnly>
               <AppBarUI currentUser={currentUser} />
-              <Login />
-              {/* <Register /> */}
             </ClientOnly>
             {children}
           </body>

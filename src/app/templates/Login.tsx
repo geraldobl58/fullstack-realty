@@ -1,12 +1,14 @@
 "use client";
 
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 
 import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
 
 import { yupResolver } from "@hookform/resolvers/yup";
+
+import { SnackbarProvider, enqueueSnackbar } from "notistack";
 
 import { Button, Grid, Typography } from "@mui/material";
 import { GitHub, Google } from "@mui/icons-material";
@@ -17,7 +19,6 @@ import InputField from "../components/InputField";
 import { schemaLogin } from "../schemas/login";
 
 import { useModal } from "../hooks/useModal";
-import { SnackbarProvider, enqueueSnackbar } from "notistack";
 
 const Login = () => {
   const router = useRouter();
@@ -33,6 +34,10 @@ const Login = () => {
   } = useForm({
     resolver: yupResolver(schemaLogin),
   });
+
+  const toggle = useCallback(() => {
+    // Abrir modal de cadastro e fechar o login
+  }, []);
 
   const onSubmit: SubmitHandler<FieldValues> = (data) => {
     setIsLoading(true);
@@ -152,8 +157,9 @@ const Login = () => {
                 color="text.secondary"
                 textAlign="center"
               >
-                Ainda não tem conta? Cadastrar
+                Ainda não tem conta?
               </Typography>
+              <Typography onClick={toggle}>Cadadstrar</Typography>
             </Grid>
           </Grid>
         }

@@ -4,6 +4,8 @@ import { MouseEvent, useState } from "react";
 
 import { signOut } from "next-auth/react";
 
+import Link from "next/link";
+
 import {
   Avatar,
   Box,
@@ -83,11 +85,15 @@ const UserMenu = ({ currentUser }: UserMenuProps) => {
         ) : (
           <Box>
             <MenuItem onClick={setModalOpen}>
-              <Typography>Entrar</Typography>
+              <Link passHref href="/login">
+                Fazer login
+              </Link>
             </MenuItem>
             <Divider />
             <MenuItem>
-              <Typography>Cadastre-se</Typography>
+              <Link passHref href="/register">
+                Cadastre-se
+              </Link>
             </MenuItem>
           </Box>
         )}
