@@ -4,6 +4,8 @@ import { MouseEvent, useState } from "react";
 
 import { signOut } from "next-auth/react";
 
+import { redirect, usePathname } from "next/navigation";
+
 import Link from "next/link";
 
 import {
@@ -17,8 +19,6 @@ import {
   Typography,
 } from "@mui/material";
 
-import { useModal } from "../hooks/useModal";
-
 import { SafeUser } from "../types";
 
 interface UserMenuProps {
@@ -26,7 +26,7 @@ interface UserMenuProps {
 }
 
 const UserMenu = ({ currentUser }: UserMenuProps) => {
-  const { setModalOpen } = useModal();
+  const pathname = usePathname();
 
   const [anchorElUser, setAnchorElUser] = useState<null | HTMLElement>(null);
 
@@ -41,6 +41,10 @@ const UserMenu = ({ currentUser }: UserMenuProps) => {
   const handleSignOut = () => {
     signOut();
   };
+
+  if ((currentUser && pathname === "/login") || pathname === "/register") {
+    redirect("/");
+  }
 
   return (
     <Box sx={{ flexGrow: 0 }}>
@@ -84,7 +88,7 @@ const UserMenu = ({ currentUser }: UserMenuProps) => {
           </Box>
         ) : (
           <Box>
-            <MenuItem onClick={setModalOpen}>
+            <MenuItem>
               <Link passHref href="/login">
                 Fazer login
               </Link>

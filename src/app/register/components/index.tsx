@@ -48,7 +48,7 @@ const RegisterPage = () => {
           },
         });
 
-        router.refresh();
+        router.push("/login");
       })
       .catch((error) => {
         enqueueSnackbar("Houve um erro ao realizar o cadastro!", {

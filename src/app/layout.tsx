@@ -5,8 +5,6 @@ import { ThemeProvider, CssBaseline } from "@mui/material";
 import AppBarUI from "./components/AppBar";
 import ClientOnly from "./components/ClientOnly";
 
-import { ModalProvider } from "./contexts/ModalContext";
-
 import getCurrentUser from "./actions/getCurrentUser";
 
 import { theme } from "./styles/theme";
@@ -32,14 +30,12 @@ export default async function RootLayout({
       </head>
       <ThemeProvider theme={theme}>
         <CssBaseline />
-        <ModalProvider>
-          <body>
-            <ClientOnly>
-              <AppBarUI currentUser={currentUser} />
-            </ClientOnly>
-            {children}
-          </body>
-        </ModalProvider>
+        <body>
+          <ClientOnly>
+            <AppBarUI currentUser={currentUser} />
+          </ClientOnly>
+          {children}
+        </body>
       </ThemeProvider>
     </html>
   );
